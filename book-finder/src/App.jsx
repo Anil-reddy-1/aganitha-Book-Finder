@@ -8,28 +8,26 @@ function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [errm, setErrm] = useState('')
+  const [errm, setErrm] = useState('');
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const newData = await axios.get('https://openlibrary.org/trending/monthly.json');//got this api type from chat gpt
+      console.log(newData.data);
+      setData(newData.data.works);
+      setError(false);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setError(true);
+      setErrm("Something went Wrong ....");
+      console.log(err)
+    }
+  }
 
   useEffect(() => {
-
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        const newData = await axios.get('https://openlibrary.org/trending/monthly.json');//got this api type from chat gpt
-        console.log(newData.data);
-        setData(newData.data.works);
-        setError(false);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        setError(true);
-        setErrm("Something went Wrong ....");
-        console.log(err)
-      }
-    }
     loadData();
-
-
   }, [])
 
 
@@ -53,7 +51,9 @@ function App() {
         setErrm(err);
       }
       setLoading(false);
-
+    }
+    else {
+      loadData();
     }
 
   }
