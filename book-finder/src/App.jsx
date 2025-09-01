@@ -69,6 +69,7 @@ function App() {
           <input type="text" className='input-field' placeholder='Enter Book Name ' value={name} onChange={(e) => setName(e.target.value)} />
           <button className='search-button' onClick={search}>🔍</button>
         </div>
+
         {loading ? (<h2>Loading ...</h2>) : (<></>)}
         {error ? (<h2 > {String(errm)}</h2>) : (<></>)}
         <div className="container">
@@ -79,13 +80,14 @@ function App() {
               <h3 className='title' >{item.title.length > 50 ? item.title.slice(0, 50) + "..." : item.title}</h3>
               {item.cover_i ? (
                 <img
-                  src={`https://covers.openlibrary.org/b/id/${item.cover_i}-M.jpg`}
+                  src={`https://covers.openlibrary.org/b/id/${item.cover_i}-M.jpg`} // also got  from chat gpt only API though
                   alt={item.title}
                   className='image'
                 />
               ) : (
                 <p className='alternate-text'>No cover available  </p>
               )}
+              <p style={{ alignSelf: 'center', }}>{item.author_name[0]}</p>
             </div>
           ))}
         </div>
